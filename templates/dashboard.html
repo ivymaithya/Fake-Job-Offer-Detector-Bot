@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Fake Job Detector{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-overview">
+    <div class="stat-card total">
+        <div class="stat-title">Total Analyzed</div>
+        <div class="stat-value">{{ stats.total }}</div>
+        <div class="stat-icon">📄</div>
+    </div>
+    
+    <div class="stat-card safe">
+        <div class="stat-title">Safe Offers</div>
+        <div class="stat-value">{{ stats.safe }}</div>
+        <div class="stat-icon">✅</div>
+    </div>
+    
+    <div class="stat-card suspicious">
+        <div class="stat-title">Suspicious</div>
+        <div class="stat-value">{{ stats.suspicious }}</div>
+        <div class="stat-icon">⚠️</div>
+    </div>
+    
+    <div class="stat-card scam">
+        <div class="stat-title">Likely Scams</div>
+        <div class="stat-value">{{ stats.scam }}</div>
+        <div class="stat-icon">🚨</div>
+    </div>
+</div>
+
+<div class="dashboard-widgets">
+    <div class="widget info-widget">
+        <h3>Welcome to JobShield Bot</h3>
+        <p>This system helps you identify potentially fraudulent job advertisements, internship postings, and recruitment messages.</p>
+        <p>Our rule-based scoring algorithm analyzes text for known red flags commonly used by scammers in the recruitment industry.</p>
+        <a href="{{ url_for('analyze') }}" class="btn btn-primary">Start Analyzing Now</a>
+    </div>
+    
+    <div class="widget red-flags-widget">
+        <h3>Common Scam Red Flags</h3>
+        <ul class="red-flag-list">
+            <li><span class="flag-icon">🚩</span> Employer requests a registration or processing fee.</li>
+            <li><span class="flag-icon">🚩</span> Unrealistic salary promises for minimal work.</li>
+            <li><span class="flag-icon">🚩</span> High-pressure urgency or "limited slots" tactics.</li>
+            <li><span class="flag-icon">🚩</span> Poor grammar, spelling, and unprofessional communication.</li>
+            <li><span class="flag-icon">🚩</span> Requests payment via mobile money (M-Pesa) before an interview.</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

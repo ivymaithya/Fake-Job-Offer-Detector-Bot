@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Scan History | Fake Job Detector{% endblock %}
+{% block page_title %}Scan History{% endblock %}
+
+{% block content %}
+<div class="history-container">
+    <div class="card history-card">
+        <h3>Previous Scans</h3>
+        
+        {% if scans %}
+        <div class="table-responsive">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date Scanned</th>
+                        <th>Job Snippet</th>
+                        <th>Score</th>
+                        <th>Classification</th>
+                        <th>Flags Detected</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for scan in scans %}
+                    <tr>
+                        <td class="date-col">{{ scan.date_scanned }}</td>
+                        <td class="text-col">
+                            <div class="text-snippet" title="{{ scan.job_text }}">
+                                {{ scan.job_text[:60] }}{% if scan.job_text|length > 60 %}...{% endif %}
+                            </div>
+                        </td>
+                        <td class="score-col">
+                            <span class="score-badge {{ scan.classification | lower | replace(' ', '-') }}">
+                                {{ scan.score }}%
+                            </span>
+                        </td>
+                        <td class="class-col">
+                            <span class="classification-text {{ scan.classification | lower | replace(' ', '-') }}">
+                                {{ scan.classification }}
+                            </span>
+                        </td>
+                        <td class="flags-col">
+                            {{ scan.reasons | length }} flags
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>No job descriptions have been scanned yet.</p>
+            <a href="{{ url_for('analyze') }}" class="btn btn-primary">Run First Scan</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
